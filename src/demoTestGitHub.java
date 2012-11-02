@@ -1,6 +1,7 @@
 
 public class demoTestGitHub {
 	set a = new set();
+	game g = new game();
 
 	public demoTestGitHub() {
 		super();
