@@ -1,7 +1,7 @@
 
 public class demoTestGitHub {
 	set a = new set();
-
+int caibienchahiunoizzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz = 0;
 	public demoTestGitHub() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -17,6 +17,7 @@ public class demoTestGitHub {
 	}
 
 	public void setA(set a) {
+		this.a = a;
 		this.a = a;
 	}
 	
