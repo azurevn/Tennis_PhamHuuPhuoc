@@ -1,13 +1,16 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class set {
 	int gameNumber = 0;
-	int player1Win = 0;
-	int player2Win = 0;
+	int gamesPlayer1Win = 0;
+	int gamesPlayer2Win = 0;
 	int gap = 0;
 	player player1 = new player();
 	player player2 = new player();
+	
 	ArrayList<game> games = new ArrayList<game>();
+	Random randomGenerator = new Random();
 
 	public set() {
 		super();
@@ -77,7 +80,7 @@ public class set {
 				games.get(gameNumber).setWiner(player1);
 			}
 			games.get(gameNumber).setWiner(player1);
-			player1Win++;
+			gamesPlayer1Win++;
 			gameNumber++;
 		}
 	}
@@ -97,7 +100,7 @@ public class set {
 				games.get(gameNumber).setWiner(player2);
 			}
 			games.get(gameNumber).setWiner(player2);
-			player2Win++;
+			gamesPlayer2Win++;
 			gameNumber++;
 		}
 	}
@@ -105,12 +108,12 @@ public class set {
 	public boolean condition() {
 		boolean conditionBoolean = true;
 
-		if (player2Win == 6 && player1Win <= 4)
+		if (gamesPlayer2Win == 6 && gamesPlayer1Win <= 4)
 			conditionBoolean = false;
-		if (player1Win == 6 && player2Win <= 4)
+		if (gamesPlayer1Win == 6 && gamesPlayer2Win <= 4)
 			conditionBoolean = false;
-		if (player1Win >= 5 && player2Win >= 5) {
-			gap = player1Win - player2Win;
+		if (gamesPlayer1Win >= 5 && gamesPlayer2Win >= 5) {
+			gap = gamesPlayer1Win - gamesPlayer2Win;
 
 			if (gap == 2 || gap == -2)
 				conditionBoolean = false;
@@ -134,9 +137,9 @@ public class set {
 			games.get(gameNumber).playRandomToGetWiner();
 
 			if (games.get(gameNumber).getWiner() == player1)
-				player1Win++;
+				gamesPlayer1Win++;
 			else
-				player2Win++;
+				gamesPlayer2Win++;
 			player1.reset();
 			player2.reset();
 			gameNumber++;
@@ -145,10 +148,10 @@ public class set {
 
 	public String printSetResult() {
 		String result = null;
-		result = "p1:" + player1Win + ";p2:" + player2Win;
-		if (player1Win == 6 && player2Win <= 4)
+		result = "p1:" + gamesPlayer1Win + ";p2:" + gamesPlayer2Win;
+		if (gamesPlayer1Win == 6 && gamesPlayer2Win <= 4)
 			result += "=>Win:p1";
-		if (player2Win == 6 && player1Win <= 4)
+		if (gamesPlayer2Win == 6 && gamesPlayer1Win <= 4)
 			result += "=>Win:p2";
 		if (gap == 2)
 			result += "=>Win:p1";
@@ -156,5 +159,55 @@ public class set {
 			result += "=>Win:p2";
 		return result;
 	}
+	public int myRandomGameWinForWiner(){
+		int gameWinScore = 0;
+		while (gameWinScore<5||gameWinScore>30)
+		{
+			gameWinScore = randomGenerator.nextInt(30);
+		}
+		return gameWinScore;
+	}
+	public int myRandomGameWinForLoser(){
+		int gameWinScore = -1;
+		while (gameWinScore<=0||gameWinScore>5)
+		{
+			gameWinScore = randomGenerator.nextInt(4);
+		}
+		return gameWinScore;
+	}
+	
+
+	public void setPlayer1WinSetWithRandomScore() {
+		int randomGamesPlayer1Win = myRandomGameWinForWiner();
+		if(randomGamesPlayer1Win>6){
+			setScoreOfPlayer1AndPlayer2InSet(randomGamesPlayer1Win, randomGamesPlayer1Win-2);
+		}
+		else{
+			setScoreOfPlayer1AndPlayer2InSet(randomGamesPlayer1Win, myRandomGameWinForLoser());
+		}
+	}
+
+	public void setPlayer2WinSetWithRandomScore() {
+		int randomGamesPlayer2Win = myRandomGameWinForWiner();
+		if(randomGamesPlayer2Win>6){
+			setScoreOfPlayer1AndPlayer2InSet(randomGamesPlayer2Win-2, randomGamesPlayer2Win);
+		}
+		else{
+			setScoreOfPlayer1AndPlayer2InSet(myRandomGameWinForLoser(),randomGamesPlayer2Win);
+		}
+	}
+	public player returnWinnerOfSet(){
+		player winerOfSet = new player();
+		if (gamesPlayer1Win == 6 && gamesPlayer2Win <= 4)
+			winerOfSet = player1;
+		if (gamesPlayer2Win == 6 && gamesPlayer1Win <= 4)
+			winerOfSet = player2;
+		if (gap == 2)
+			winerOfSet = player1;
+		if (gap == -2)
+			winerOfSet = player2;
+		return winerOfSet;
+	}
+	
 
 }

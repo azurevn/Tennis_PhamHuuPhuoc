@@ -5,6 +5,11 @@ import org.junit.Test;
 public class setTest {
 
 	set s = new set();
+	@Test
+	public void testNull() {
+		s.setGames(null);
+		assertNull(s.getGames());
+	}
 
 	@Test
 	public void test_Player1_0_Player2_0() {
