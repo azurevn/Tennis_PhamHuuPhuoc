@@ -47,6 +47,7 @@ public class match {
 		sets.add(setNumber, s);
 		sets.get(setNumber).setPlayer1WinSetWithRandomScore();
 		setsPlayer1Win++;
+		setNumber++;
 		
 	}
 
@@ -55,6 +56,7 @@ public class match {
 		sets.add(setNumber, s);
 		sets.get(setNumber).setPlayer2WinSetWithRandomScore();
 		setsPlayer2Win++;
+		setNumber++;
 
 	}
 
