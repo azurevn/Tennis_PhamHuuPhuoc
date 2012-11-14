@@ -50,7 +50,6 @@ public class set {
 
 	public void setScoreOfPlayer1AndPlayer2InSet(int p1, int p2) {
 		int sumScore = p1+p2;
-		
 		while (sumScore != 0) {
 			if (p1 != 0) {
 				player1WinAGame();
