@@ -4,7 +4,7 @@ import org.junit.Test;
 
 
 public class matchTest {
-	match m = new match();
+	Match m = new Match();
 
 	@Test
 	public void testMatchNull() {

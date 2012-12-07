@@ -1,118 +1,117 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class set {
+public class Set {
 	int gameNumber = 0;
-	int gamesPlayer1Win = 0;
-	int gamesPlayer2Win = 0;
+	int gamesPlayer1stWin = 0;
+	int gamesPlayer2ndWin = 0;
 	int gap = 0;
-	player player1 = new player();
-	player player2 = new player();
+	Player player1st = new Player();
+	Player player2nd = new Player();
 	
-	ArrayList<game> games = new ArrayList<game>();
+	ArrayList<Game> games = new ArrayList<Game>();
 	Random randomGenerator = new Random();
 
-	public set() {
+	public Set() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public set(player p1, player p2, ArrayList<game> games) {
+	public Set(Player player1st, Player player2nd) {
 		super();
-		this.player1 = p1;
-		this.player2 = p2;
-		this.games = games;
+		this.player1st = player1st;
+		this.player2nd = player2nd;
 	}
 
-	public ArrayList<game> getGames() {
+	public ArrayList<Game> getGames() {
 		return games;
 	}
 
-	public player getPlayer1() {
-		return player1;
+	public Player getPlayer1st() {
+		return player1st;
 	}
 
-	public player getPlayer2() {
-		return player2;
+	public Player getPlayer2nd() {
+		return player2nd;
 	}
 
-	public void setGames(ArrayList<game> games) {
+	public void setGames(ArrayList<Game> games) {
 		this.games = games;
 	}
 
-	public void setPlayer1(player p1) {
-		this.player1 = p1;
+	public void setPlayer1st(Player player1st) {
+		this.player1st = player1st;
 	}
 
-	public void setPlayer2(player p2) {
-		this.player2 = p2;
+	public void setPlayer2(Player player2nd) {
+		this.player2nd = player2nd;
 	}
 
-	public void setScoreOfPlayer1AndPlayer2InSet(int p1, int p2) {
-		int sumScore = p1+p2;
+	public void setScoreOfPlayer1stAndPlayer2ndInSet(int player1st, int player2nd) {
+		int sumScore = player1st+player2nd;
 		while (sumScore != 0) {
-			if (p1 != 0) {
-				player1WinAGame();
-				p1--;
+			if (player1st != 0) {
+				addPlayer1stWinAGame();
+				player1st--;
 			}
-			if (p2 != 0) {
-				player2WinAGame();
-				p2--;
+			if (player2nd != 0) {
+				addPlayer2ndWinAGame();
+				player2nd--;
 			}
-			sumScore = p1+p2;
+			sumScore = player1st+player2nd;
 		}
 	}
 
 
-	public void player1WinAGame() {
-		if (condition()) {
-			game g = new game();
+	public void addPlayer1stWinAGame() {
+		if (conditionAdd()) {
+			Game g = new Game();
 			if (gameNumber % 2 == 0) {
 				games.add(gameNumber, g);
-				games.get(gameNumber).setServer(player1);
-				games.get(gameNumber).setReciever(player2);
-				games.get(gameNumber).setWiner(player1);
+				games.get(gameNumber).setServer(player1st);
+				games.get(gameNumber).setReciever(player2nd);
+				games.get(gameNumber).setWiner(player1st);
 			} else {
 				games.add(gameNumber, g);
-				games.get(gameNumber).setServer(player2);
-				games.get(gameNumber).setReciever(player1);
-				games.get(gameNumber).setWiner(player1);
+				games.get(gameNumber).setServer(player2nd);
+				games.get(gameNumber).setReciever(player1st);
+				games.get(gameNumber).setWiner(player1st);
 			}
-			games.get(gameNumber).setWiner(player1);
-			gamesPlayer1Win++;
+			games.get(gameNumber).setWiner(player1st);
+			gamesPlayer1stWin++;
 			gameNumber++;
 		}
 	}
 
-	public void player2WinAGame() {
-		if (condition()) {
-			game g = new game();
+	public void addPlayer2ndWinAGame() {
+		if (conditionAdd()) {
+			Game g = new Game();
 			if (gameNumber % 2 == 0) {
 				games.add(gameNumber, g);
-				games.get(gameNumber).setServer(player1);
-				games.get(gameNumber).setReciever(player2);
-				games.get(gameNumber).setWiner(player2);
+				games.get(gameNumber).setServer(player1st);
+				games.get(gameNumber).setReciever(player2nd);
+				games.get(gameNumber).setWiner(player2nd);
 			} else {
 				games.add(gameNumber, g);
-				games.get(gameNumber).setServer(player2);
-				games.get(gameNumber).setReciever(player1);
-				games.get(gameNumber).setWiner(player2);
+				games.get(gameNumber).setServer(player2nd);
+				games.get(gameNumber).setReciever(player1st);
+				games.get(gameNumber).setWiner(player2nd);
 			}
-			games.get(gameNumber).setWiner(player2);
-			gamesPlayer2Win++;
+			games.get(gameNumber).setWiner(player2nd);
+			gamesPlayer2ndWin++;
 			gameNumber++;
 		}
 	}
 
-	public boolean condition() {
+	public boolean conditionAdd() {
 		boolean conditionBoolean = true;
 
-		if (gamesPlayer2Win == 6 && gamesPlayer1Win <= 4)
+		if (gamesPlayer2ndWin == 6 && gamesPlayer1stWin <= 4)
 			conditionBoolean = false;
-		if (gamesPlayer1Win == 6 && gamesPlayer2Win <= 4)
+		if (gamesPlayer1stWin == 6 && gamesPlayer2ndWin <= 4)
 			conditionBoolean = false;
-		if (gamesPlayer1Win >= 5 && gamesPlayer2Win >= 5) {
-			gap = gamesPlayer1Win - gamesPlayer2Win;
+		if (gamesPlayer1stWin >= 5 && gamesPlayer2ndWin >= 5) {
+			gap = gamesPlayer1stWin - gamesPlayer2ndWin;
 
 			if (gap == 2 || gap == -2)
 				conditionBoolean = false;
@@ -121,36 +120,36 @@ public class set {
 	}
 
 	public void playRanDomSet() {
-		while (condition()) {
-			game g = new game();
+		while (conditionAdd()) {
+			Game g = new Game();
 			if (gameNumber % 2 == 0) {
 				games.add(gameNumber, g);
-				games.get(gameNumber).setServer(player1);
-				games.get(gameNumber).setReciever(player2);
+				games.get(gameNumber).setServer(player1st);
+				games.get(gameNumber).setReciever(player2nd);
 
 			} else {
 				games.add(gameNumber, g);
-				games.get(gameNumber).setServer(player2);
-				games.get(gameNumber).setReciever(player1);
+				games.get(gameNumber).setServer(player2nd);
+				games.get(gameNumber).setReciever(player1st);
 			}
 			games.get(gameNumber).playRandomToGetWiner();
 
-			if (games.get(gameNumber).getWiner() == player1)
-				gamesPlayer1Win++;
+			if (games.get(gameNumber).getWiner() == player1st)
+				gamesPlayer1stWin++;
 			else
-				gamesPlayer2Win++;
-			player1.reset();
-			player2.reset();
+				gamesPlayer2ndWin++;
+			player1st.reset();
+			player2nd.reset();
 			gameNumber++;
 		}
 	}
 
 	public String printSetResult() {
 		String result = null;
-		result = "p1:" + gamesPlayer1Win + ";p2:" + gamesPlayer2Win;
-		if (gamesPlayer1Win == 6 && gamesPlayer2Win <= 4)
+		result = "p1:" + gamesPlayer1stWin + ";p2:" + gamesPlayer2ndWin;
+		if (gamesPlayer1stWin == 6 && gamesPlayer2ndWin <= 4)
 			result += "=>Win:p1";
-		if (gamesPlayer2Win == 6 && gamesPlayer1Win <= 4)
+		if (gamesPlayer2ndWin == 6 && gamesPlayer1stWin <= 4)
 			result += "=>Win:p2";
 		if (gap == 2)
 			result += "=>Win:p1";
@@ -179,32 +178,32 @@ public class set {
 	public void setPlayer1WinSetWithRandomScore() {
 		int randomGamesPlayer1Win = myRandomGameWinForWiner();
 		if(randomGamesPlayer1Win>6){
-			setScoreOfPlayer1AndPlayer2InSet(randomGamesPlayer1Win, randomGamesPlayer1Win-2);
+			setScoreOfPlayer1stAndPlayer2ndInSet(randomGamesPlayer1Win, randomGamesPlayer1Win-2);
 		}
 		else{
-			setScoreOfPlayer1AndPlayer2InSet(randomGamesPlayer1Win, myRandomGameWinForLoser());
+			setScoreOfPlayer1stAndPlayer2ndInSet(randomGamesPlayer1Win, myRandomGameWinForLoser());
 		}
 	}
 
 	public void setPlayer2WinSetWithRandomScore() {
 		int randomGamesPlayer2Win = myRandomGameWinForWiner();
 		if(randomGamesPlayer2Win>6){
-			setScoreOfPlayer1AndPlayer2InSet(randomGamesPlayer2Win-2, randomGamesPlayer2Win);
+			setScoreOfPlayer1stAndPlayer2ndInSet(randomGamesPlayer2Win-2, randomGamesPlayer2Win);
 		}
 		else{
-			setScoreOfPlayer1AndPlayer2InSet(myRandomGameWinForLoser(),randomGamesPlayer2Win);
+			setScoreOfPlayer1stAndPlayer2ndInSet(myRandomGameWinForLoser(),randomGamesPlayer2Win);
 		}
 	}
-	public player returnWinnerOfSet(){
-		player winerOfSet = new player();
-		if (gamesPlayer1Win == 6 && gamesPlayer2Win <= 4)
-			winerOfSet = player1;
-		if (gamesPlayer2Win == 6 && gamesPlayer1Win <= 4)
-			winerOfSet = player2;
+	public Player returnWinnerOfSet(){
+		Player winerOfSet = new Player();
+		if (gamesPlayer1stWin == 6 && gamesPlayer2ndWin <= 4)
+			winerOfSet = player1st;
+		if (gamesPlayer2ndWin == 6 && gamesPlayer1stWin <= 4)
+			winerOfSet = player2nd;
 		if (gap == 2)
-			winerOfSet = player1;
+			winerOfSet = player1st;
 		if (gap == -2)
-			winerOfSet = player2;
+			winerOfSet = player2nd;
 		return winerOfSet;
 	}
 	

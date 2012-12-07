@@ -1,54 +1,70 @@
 import java.util.ArrayList;
+import java.util.Random;
 
-public class match {
-
-	ArrayList<set> sets = new ArrayList<set>();
-
+public class Match {
+	ArrayList<Set> sets = new ArrayList<Set>();
 	int setNumber = 0;
-
 	int setsPlayer1Win = 0;
-
 	int setsPlayer2Win = 0;
-
-	player player1 = new player();
-	player player2 = new player();
-
-	public match() {
+	Player player1st = new Player();
+	Player player2nd = new Player();
+	public Match() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public match(ArrayList<set> sets) {
+	public Match(ArrayList<Set> sets) {
 		super();
 		this.sets = sets;
 	}
 
-	public player getPlayer1() {
-		return player1;
+	public Match(Player player1st, Player player2nd) {
+		this.player1st = player1st;
+		this.player2nd = player2nd;
 	}
 
-	public player getPlayer2() {
-		return player2;
+	public Player getPlayer1st() {
+		return player1st;
 	}
 
-	public ArrayList<set> getSets() {
+	public Player getPlayer2nd() {
+		return player2nd;
+	}
+	public void setPlayer1st(Player player1) {
+		this.player1st = player1;
+	}
+
+	public void setPlayer2nd(Player player2) {
+		this.player2nd = player2;
+	}
+
+	public void setSets(ArrayList<Set> sets) {
+		this.sets = sets;
+	}
+
+	public boolean getRandomBoolean() {
+		Random random = new Random();
+		return random.nextBoolean();
+	}
+
+	public ArrayList<Set> getSets() {
 		return sets;
 	}
 
+	
 	public void player1WinASet() {
-		set s = new set();
+		Set s = new Set();
 		sets.add(setNumber, s);
-		sets.get(setNumber).setPlayer1(player1);
+		sets.get(setNumber).setPlayer1st(player1st);
 		sets.get(setNumber).setPlayer1WinSetWithRandomScore();
 		setsPlayer1Win++;
 		setNumber++;
-
 	}
 
 	public void player2WinASet() {
-		set s = new set();
+		Set s = new Set();
 		sets.add(setNumber, s);
-		sets.get(setNumber).setPlayer2(player2);
+		sets.get(setNumber).setPlayer2(player2nd);
 		sets.get(setNumber).setPlayer2WinSetWithRandomScore();
 		setsPlayer2Win++;
 		setNumber++;
@@ -73,26 +89,29 @@ public class match {
 			result = "player2";
 		return result;
 	}
-
-	public player returnWinnerOfMatch() {
-		player winnerOfMatch = new player();
+	
+	public Player returnWinnerOfMatch() {
+		Player winnerOfMatch = new Player("winnerOfMatch");
 		if (setsPlayer1Win == 2)
-			winnerOfMatch = player1;
+			winnerOfMatch = player1st;
 		if (setsPlayer2Win == 2)
-			winnerOfMatch = player2;
+			winnerOfMatch = player2nd;
 		return winnerOfMatch;
 	}
-
-	public void setFirstPlayer(player player1) {
-		this.player1 = player1;
+	
+	public Player returnWinnerOfMatchRandom(){
+		if(getRandomBoolean()){
+			player1WinASet();
+			player1WinASet();
+		}
+		else
+		{
+			player2WinASet();
+			player2WinASet();
+		}
+		return returnWinnerOfMatch();
 	}
 
-	public void setSecondPlayer(player player2) {
-		this.player2 = player2;
-	}
 
-	public void setSets(ArrayList<set> sets) {
-		this.sets = sets;
-	}
 
 }

@@ -1,16 +1,19 @@
-public class player {
-	int score = 0;
-	String advantage = "40";
-	boolean win = false;
-	public player() {
+public class Player {
+	 String name = null;
+	 int score = 0;
+	 String advantage = "40";
+	 boolean win = false;
+	public Player() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public player(int score) {
+	public Player(int score) {
 		super();
 		this.score = score;
 	}
-
+	public Player(String s) {
+        name = s;
+    }
 	public String getScore() {
 		String convert = "0";
 
@@ -28,13 +31,6 @@ public class player {
 		return convert;
 	}
 
-	public void winScore() {
-		if (score < 5)
-			score++;
-		
-
-	}
-
 	public void reset(){
 		score = 0;
 		advantage = "40";
@@ -42,7 +38,10 @@ public class player {
 		
 	}
 
-	
+	public void setScore(int score) {
+		this.score = score;
+	}
+
 	public void setScore(String score) {
 		if (score == "0")
 			this.score = 0;
@@ -54,6 +53,14 @@ public class player {
 			this.score = 3;
 		if (score == "A")
 			this.score = 4;
+
+	}
+
+	
+	public void winScore() {
+		if (score < 5)
+			score++;
+		
 
 	}
 }

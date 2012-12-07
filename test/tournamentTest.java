@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class tournamentTest {
-	tournament t = new tournament();
+	Tournament t = new Tournament();
 
 	@Test
 	public void testGetMatchszNull() {
@@ -13,20 +13,53 @@ public class tournamentTest {
 	}
 
 	@Test
-	public void testNew() {
-		
-		player p1 = new player();
-		player p2 = new player();
-		t.createAMatchWith2Player(p1, p2);
-		player p3 = new player();
-		player p4 = new player();
-		t.createAMatchWith2Player(p3, p4);
-		t.setFirstPlayerWinMatch(0);
-		t.setSecondPlayerWinMatch(1);
-		t.playOff();
-		t.setSecondPlayerWinMatch(0);
-		assertEquals(p4,t.champion());
-		
-	}
+	public void testRunPlayOff1Time() {
+		t.createTour();
+		t.playOffRandom();
+		assertEquals(4, t.matchNumber);
 
+	}
+	@Test
+	public void testRunPlayOff2Time() {
+		t.createTour();
+		t.playOffRandom();
+		t.playOffRandom();
+		assertEquals(2, t.matchNumber);
+
+	}
+	@Test
+	public void testRunPlayOff3Time() {
+		t.createTour();
+		t.playOffRandom();
+		t.playOffRandom();
+		t.playOffRandom();
+		assertEquals(1, t.matchNumber);
+
+	}
+	@Test
+	public void testReturnChampionRandom() {
+		t.createTour();
+		assertNotNull(t.returnChampionRandom());
+
+	}
+	@Test
+	public void testReturnNameChampionRandom() {
+		t.createTour();
+		assertNotNull(t.returnChampionRandom().name);
+
+	}
+	@Test
+	public void testPrintChampionResult() {
+		t.createTour();
+		assertNotNull(t.returnChampionRandom().name);
+
+	}
+	@Test
+	public void testCreateTourWithNumberPlayer() {
+		t.createTourWithNumberPlayer(64);
+		t.playOffRandom();
+		assertEquals(16, t.matchNumber);
+
+	}
+	
 }

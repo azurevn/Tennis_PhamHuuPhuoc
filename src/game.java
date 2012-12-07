@@ -1,44 +1,43 @@
 import java.util.Random;
 
-public class game {
-	player winer = new player();
-	player server = new player();
-	player reciever = new player();
+public class Game {
+	Player winer = new Player();
+	Player server = new Player();
+	Player reciever = new Player();
 	String result = null;
 
-	public game() {
+	public Game() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public game(player winer, player server, player reciever) {
+	public Game(Player server, Player reciever) {
 		super();
-		this.winer = winer;
 		this.server = server;
 		this.reciever = reciever;
 	}
 
-	public player getReciever() {
+	public Player getReciever() {
 		return reciever;
 	}
 
-	public player getServer() {
+	public Player getServer() {
 		return server;
 	}
 
-	public player getWiner() {
+	public Player getWiner() {
 		return winer;
 	}
 
-	public void setReciever(player reciever) {
+	public void setReciever(Player reciever) {
 		this.reciever = reciever;
 	}
 
-	public void setServer(player server) {
+	public void setServer(Player server) {
 		this.server = server;
 	}
 
-	public void setWiner(player winer) {
+	public void setWiner(Player winer) {
 		this.winer = winer;
 	}
 

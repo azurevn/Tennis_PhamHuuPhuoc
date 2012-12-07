@@ -4,7 +4,7 @@ import org.junit.Test;
 
 
 public class playerTest {
-	player p = new player();
+	Player p = new Player();
 
 	@Test
 	public void testGetScore15() {

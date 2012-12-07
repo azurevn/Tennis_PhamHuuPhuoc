@@ -4,8 +4,11 @@ import org.junit.Test;
 
 
 public class gameTest {
-	game g = new game();
-
+	
+	Player player1st = new Player();
+	Player player2nd = new Player();
+	Game g = new Game();
+	
 
 	@Test
 	public void testServer_0_Reciever_0() {
