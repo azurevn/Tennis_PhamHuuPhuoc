@@ -1,14 +1,19 @@
 import java.util.Random;
 
 public class Game {
-	Player winer = new Player();
-	Player server = new Player();
-	Player reciever = new Player();
-	String result = null;
+	private Player winer = new Player("winer");
+	private Player server = new Player("server");
+	private Player reciever = new Player("reciever");
 
 	public Game() {
 		super();
-		// TODO Auto-generated constructor stub
+	}
+
+	public void resetGame() {
+		System.out.println("xxx_ResetGame_xxx");
+		winer.reset();
+		server.reset();
+		reciever.reset();
 	}
 
 	public Game(Player server, Player reciever) {
@@ -41,101 +46,207 @@ public class Game {
 		this.winer = winer;
 	}
 
-	public String convertAndReturnResultString() {
-		String serverScore = "0";
-		String recieverScore = "0";
-		if (server.score == 1)
-			serverScore = "15";
-		if (server.score == 2)
-			serverScore = "30";
-		if (server.score == 3)
-			serverScore = "40";
-		if (server.score == 4)
-			serverScore = "A";
-		if (server.score == 4 && reciever.score < 3)
-			serverScore = "Win";
-		if (reciever.score == 1)
-			recieverScore = "15";
-		if (reciever.score == 2)
-			recieverScore = "30";
-		if (reciever.score == 3)
-			recieverScore = "40";
-		if (reciever.score == 4)
-			recieverScore = "A";
-		if (reciever.score == 4 && server.score < 3)
-			recieverScore = "Win";
-		return "Server=" + serverScore + ":Reciever=" + recieverScore;
+
+	public void setScoreServerAndRecieverInGame(String serverScore,
+			String recieverScore) {
+		server.setScore(serverScore);
+		reciever.setScore(recieverScore);
 	}
 
-	public void whenScoreUnder40() {
-		if (server.score <= 3 || reciever.score <= 3) {
-			result = convertAndReturnResultString();
-			if (server.score == 4 && reciever.score < 3) {
-				server.win = true;
+	public Boolean conditionEndGame() {
+		Boolean con = false;
+		if (server.isWin()&&!reciever.isWin())
+			con = true;
+		if (reciever.isWin()&&!server.isWin())
+			con = true;
+		return con;
+	}
+
+	public void playGameTieBreakRandom() {
+		System.out.println("_Start Game----------------------");
+		resetGame();
+		Random r = new Random();
+		while (!conditionEndGame()) {
+			if (r.nextBoolean())
+				serverWinScore();
+			else
+				recieverWinScore();
+		}
+		if (conditionEndGame()) {
+			
+			System.out.println("_End Game----------------------");
+		}
+	}
+
+	public void serverWinScore() {
+//		System.out.println(server.getName() + " Score");
+		if (!conditionEndGame()) {
+			String scoreServerAndReciever = server.getScore()
+					+ reciever.getScore();
+			switch (scoreServerAndReciever) {
+			case "00":
+				server.setScore("15");
+				break;
+			case "015":
+				server.setScore("15");
+				break;
+			case "030":
+				server.setScore("15");
+				break;
+			case "040":
+				server.setScore("15");
+				break;
+
+			case "150":
+				server.setScore("30");
+				break;
+			case "1515":
+				server.setScore("30");
+				break;
+			case "1530":
+				server.setScore("30");
+				break;
+			case "1540":
+				server.setScore("30");
+				break;
+
+			case "300":
+				server.setScore("40");
+				break;
+			case "3015":
+				server.setScore("40");
+				break;
+			case "3030":
+				server.setScore("40");
+				break;
+			case "3040":
+				server.setScore("40");
+				break;
+
+			case "400":
+				server.setScore("Win");
+				server.setWin(true);
 				winer = server;
+				break;
+			case "4015":
+				server.setScore("Win");
+				server.setWin(true);
+				winer = server;
+				break;
+			case "4030":
+				server.setScore("Win");
+				server.setWin(true);
+				winer = server;
+				break;
+
+			case "4040":
+				server.setScore("A");
+				break;
+
+			case "A40":
+				server.setScore("Win");
+				server.setWin(true);
+				winer = server;
+				break;
+
+			case "40A":
+				reciever.setScore("40");
+				break;
 			}
-			if (reciever.score == 4 && server.score < 3) {
-				reciever.win = true;
+		}
+		printConsole();
+	}
+
+	public void recieverWinScore() {
+
+//		System.out.println(reciever.getName() + " Score");
+
+		if (!conditionEndGame()) {
+
+			String scoreServerAndReciever = reciever.getScore()
+					+ server.getScore();
+			switch (scoreServerAndReciever) {
+			case "00":
+				reciever.setScore("15");
+				break;
+			case "015":
+				reciever.setScore("15");
+				break;
+			case "030":
+				reciever.setScore("15");
+				break;
+			case "040":
+				reciever.setScore("15");
+				break;
+
+			case "150":
+				reciever.setScore("30");
+				break;
+			case "1515":
+				reciever.setScore("30");
+				break;
+			case "1530":
+				reciever.setScore("30");
+				break;
+			case "1540":
+				reciever.setScore("30");
+				break;
+
+			case "300":
+				reciever.setScore("40");
+				break;
+			case "3015":
+				reciever.setScore("40");
+				break;
+			case "3030":
+				reciever.setScore("40");
+				break;
+			case "3040":
+				reciever.setScore("40");
+				break;
+
+			case "400":
+				reciever.setScore("Win");
+				reciever.setWin(true);
 				winer = reciever;
+				break;
+			case "4015":
+				reciever.setScore("Win");
+				reciever.setWin(true);
+				winer = reciever;
+				break;
+			case "4030":
+				reciever.setScore("Win");
+				reciever.setWin(true);
+				winer = reciever;
+				break;
+
+			case "4040":
+				reciever.setScore("A");
+				break;
+
+			case "A40":
+				reciever.setScore("Win");
+				reciever.setWin(true);
+				winer = reciever;
+				break;
+
+			case "40A":
+				server.setScore("40");
+				break;
 			}
 		}
+		printConsole();
 	}
 
-	public void whenScoreBelow40() {
-		if (server.score >= 3 && reciever.score >= 3) {
-			if (server.score >= 4 && reciever.score >= 3) {
-				server.advantage = "A";
-				reciever.advantage = "40";
-				if (server.score == 5 && reciever.score == 3) {
-					server.advantage = "Win";
-					server.win = true;
-				}
-				if (reciever.score == 4) {
-					server.score--;
-					server.advantage = "40";
-					reciever.score--;
-				}
-			}
-			if (reciever.score >= 4 && server.score >= 3) {
-				reciever.advantage = "A";
-				server.advantage = "40";
-				if (reciever.score == 5 && server.score == 3) {
-					reciever.advantage = "Win";
-					reciever.win = true;
-				}
-				if (server.score == 4) {
-					reciever.score--;
-					reciever.advantage = "40";
-					server.score--;
-				}
-			}
-			result = "Server=" + server.advantage + ":Reciever=" + reciever.advantage;
-		}
-		if (server.win)
-			winer = server;
-		if (reciever.win)
-			winer = reciever;
-	}
+	public String printResultGame() {
+		return "Server=" + server.getScore() + ":Reciever="
+				+ reciever.getScore();
 
-	public String printGameResult() {
-		whenScoreUnder40();
-		whenScoreBelow40();
-		return result;
 	}
+	public void printConsole() {
+		System.out.println("Game:" + server.getName() + "=" + server.getScore()
+				+ ";" + reciever.getName() + "=" + reciever.getScore());
 
-	public boolean getRandomBoolean() {
-		Random random = new Random();
-		return random.nextBoolean();
-	}
-	// Hàm này sẽ Random điểm trong 1 Game cho tới khi được Winer
-	public void playRandomToGetWiner() {
-		while (!winer.win) {
-			if (getRandomBoolean()) {
-				server.winScore();
-			} else
-				reciever.winScore();
-			whenScoreUnder40();
-			whenScoreBelow40();
-		}
 	}
 }

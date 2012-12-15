@@ -2,15 +2,15 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Match {
-	ArrayList<Set> sets = new ArrayList<Set>();
-	int setNumber = 0;
-	int setsPlayer1Win = 0;
-	int setsPlayer2Win = 0;
-	Player player1st = new Player();
-	Player player2nd = new Player();
+	private ArrayList<Set> sets = new ArrayList<Set>();
+	private int setNumber = 0;
+	private int setsPlayer1Win = 0;
+	private int setsPlayer2Win = 0;
+	private Player player1st = new Player();
+	private Player player2nd = new Player();
+
 	public Match() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Match(ArrayList<Set> sets) {
@@ -30,6 +30,7 @@ public class Match {
 	public Player getPlayer2nd() {
 		return player2nd;
 	}
+
 	public void setPlayer1st(Player player1) {
 		this.player1st = player1;
 	}
@@ -42,76 +43,152 @@ public class Match {
 		this.sets = sets;
 	}
 
-	public boolean getRandomBoolean() {
-		Random random = new Random();
-		return random.nextBoolean();
-	}
-
 	public ArrayList<Set> getSets() {
 		return sets;
 	}
 
-	
-	public void player1WinASet() {
-		Set s = new Set();
-		sets.add(setNumber, s);
-		sets.get(setNumber).setPlayer1st(player1st);
-		sets.get(setNumber).setPlayer1WinSetWithRandomScore();
-		setsPlayer1Win++;
-		setNumber++;
+	public void printConsole() {
+		System.out.println("_________Match: " + this.player1st.getName() + "="
+				+ this.player1st.getScore() + ";" + this.player2nd.getName()
+				+ "=" + this.player2nd.getScore());
 	}
 
-	public void player2WinASet() {
-		Set s = new Set();
-		sets.add(setNumber, s);
-		sets.get(setNumber).setPlayer2(player2nd);
-		sets.get(setNumber).setPlayer2WinSetWithRandomScore();
-		setsPlayer2Win++;
-		setNumber++;
+	public void player1stWinASetWithRandomScore() {
+		if (!conditionEndMatch()) {
+			if (setNumber >= 1) {
+				if (sets.get(setNumber - 1).isPlayer1ServeInLastGame()) {
+					Set s = new Set(player2nd, player1st);
+					sets.add(s);
+					while (!sets.get(setNumber).getPlayer2nd().isWin())
+						sets.get(setNumber).playRanDomSet();
+				} else {
+					Set s = new Set(player1st, player2nd);
+					sets.add(s);
+					while (!sets.get(setNumber).getPlayer1st().isWin())
+						sets.get(setNumber).playRanDomSet();
+				}
+			} else {
+				Set s = new Set(player1st, player2nd);
+				sets.add(s);
+				while (!sets.get(setNumber).getPlayer1st().isWin())
+					sets.get(setNumber).playRanDomSet();
+			}
+			setsPlayer1Win++;
 
+			player1st.setScore(Integer.toString(setsPlayer1Win));
+			player2nd.setScore(Integer.toString(setsPlayer2Win));
+			setNumber++;
+			printConsole();
+		}
+		if (conditionEndMatch()) {
+			printConsole();
+			System.out
+					.println("_________End match--------------------------------");
+		}
+	}
+
+	public void player2ndWinASetWithRandomScore() {
+		if (!conditionEndMatch()) {
+			if (setNumber >= 1) {
+				if (sets.get(setNumber - 1).isPlayer1ServeInLastGame()) {
+					Set s = new Set(player2nd, player1st);
+					sets.add(s);
+					while (!sets.get(setNumber).getPlayer1st().isWin())
+						sets.get(setNumber).playRanDomSet();
+				} else {
+					Set s = new Set(player1st, player2nd);
+					sets.add(s);
+					while (!sets.get(setNumber).getPlayer2nd().isWin())
+						sets.get(setNumber).playRanDomSet();
+				}
+			} else {
+				Set s = new Set(player1st, player2nd);
+				sets.add(s);
+				while (!sets.get(setNumber).getPlayer2nd().isWin())
+					sets.get(setNumber).playRanDomSet();
+			}
+			setsPlayer2Win++;
+			player1st.setScore(Integer.toString(setsPlayer1Win));
+			player2nd.setScore(Integer.toString(setsPlayer2Win));
+			setNumber++;
+			printConsole();
+		}
+		if (conditionEndMatch()) {
+			printConsole();
+			System.out
+					.println("_________End match--------------------------------");
+		}
 	}
 
 	public String printResultOfMatch() {
-		String result = "player1=" + String.valueOf(setsPlayer1Win)
-				+ ";player2=" + String.valueOf(setsPlayer2Win);
-		if (setsPlayer1Win == 2 && setsPlayer2Win < 2)
-			result += ";Winner=player1";
-		if (setsPlayer2Win == 2 && setsPlayer1Win < 2)
-			result += ";Winner=player2";
-		return result;
+		return player1st.getName() + "=" + player1st.getScore() + ";"
+				+ player2nd.getName() + "=" + player2nd.getScore();
 	}
 
 	public String printWinnerOfMatch() {
-		String result = "";
-		if (setsPlayer1Win == 2 && setsPlayer2Win < 2)
-			result = "player1";
-		if (setsPlayer2Win == 2 && setsPlayer1Win < 2)
-			result = "player2";
-		return result;
+		return returnWinnerOfMatch().getName();
 	}
-	
-	public Player returnWinnerOfMatch() {
+
+	private Player returnWinnerOfMatch() {
 		Player winnerOfMatch = new Player("winnerOfMatch");
-		if (setsPlayer1Win == 2)
+		if (player1st.isWin()) {
 			winnerOfMatch = player1st;
-		if (setsPlayer2Win == 2)
+			player1st.addNumberMatchWin();
+		}
+		if (player2nd.isWin()) {
 			winnerOfMatch = player2nd;
+			player2nd.addNumberMatchWin();
+		}
 		return winnerOfMatch;
 	}
-	
-	public Player returnWinnerOfMatchRandom(){
-		if(getRandomBoolean()){
-			player1WinASet();
-			player1WinASet();
+
+	private Boolean conditionEndMatch() {
+		Boolean con = false;
+		if (setsPlayer1Win == 2) {
+			con = true;
+			player1st.setScore("Win");
+			player1st.setWin(true);
 		}
-		else
-		{
-			player2WinASet();
-			player2WinASet();
+		if (setsPlayer2Win == 2) {
+			con = true;
+			player2nd.setScore("Win");
+			player2nd.setWin(true);
 		}
+
+		return con;
+	}
+
+	public Player playAndReturnWinerOfMatchRandom() {
+		playMatchRandom();
 		return returnWinnerOfMatch();
 	}
 
+	// public Player returnWinnerOfMatchRandom() {
+	// playMatchRandom();
+	// return returnWinnerOfMatch();
+	// }
 
+	public void resetMatch() {
+		setsPlayer1Win = 0;
+		setsPlayer2Win = 0;
+		setNumber = 0;
+		sets.clear();
+	}
 
+	public void playMatchRandom() {
+		System.out
+				.println("_________Start match--------------------------------");
+		resetMatch();
+		Random r = new Random();
+		while (!conditionEndMatch()) {
+			if (r.nextBoolean())
+				player1stWinASetWithRandomScore();
+			else
+				player2ndWinASetWithRandomScore();
+		}
+		// if(conditionEndMatch()) {
+		// printConsole();
+		// System.out.println("End match--------------------------------");
+		// }
+	}
 }
